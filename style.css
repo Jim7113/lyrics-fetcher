@@ -20,6 +20,14 @@ body{
     padding: 9px 20px;
 }
 
+.btn-danger{
+    display: none;
+}
+
+#back-btn{
+    display: none;
+}
+
 .navbar-toggler {
     border: none;
 }
