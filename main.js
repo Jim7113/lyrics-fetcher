@@ -1,6 +1,8 @@
 const baseUrl = 'https://api.lyrics.ovh';
 
 const searchBtn = document.querySelector('.search-btn');
+const backBtn = document.querySelector('#back-btn');
+const clearBtn = document.querySelector('.btn-danger');
 let songName = document.querySelector('.song-name');
 const resultSection = document.querySelector('.search-result');
 const lyricTitle = document.querySelector('.lyrics-title');
@@ -18,6 +20,8 @@ const updateUI = data => {
     removeElem(resultSection);
     removeElem(lyricTitle);
     removeElem(lyricBody);
+
+    backBtn.style.display = 'none';
 
     data.forEach(elem => {
         let singleResult = document.createElement('div');
@@ -66,6 +70,8 @@ const updateUI = data => {
         resultSection.appendChild(singleResult);
     });
 
+    clearBtn.style.display = 'block';
+
 };
 
 
@@ -98,6 +104,8 @@ const fetchLyrics = event => {
 
         lyricTitle.textContent = `${title}-${artist}`;
 
+        backBtn.style.display = 'block';
+
         fetch(`${baseUrl}/v1/${artist}/${title}`)
             .then(response => {
                 if (!response.ok) {
@@ -123,3 +131,14 @@ const fetchLyrics = event => {
 searchBtn.addEventListener('click', fetchSongData);
 
 resultSection.addEventListener('click', fetchLyrics);
+
+backBtn.addEventListener('click', fetchSongData);
+
+clearBtn.addEventListener('click', () => {
+    songName.value = '';
+    removeElem(resultSection);
+    removeElem(lyricTitle);
+    removeElem(lyricBody);
+    backBtn.style.display = 'none';
+    clearBtn.style.display = 'none';
+});
